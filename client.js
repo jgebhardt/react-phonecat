@@ -83,7 +83,7 @@ var App = React.createClass({
     return (
       <html>
         <head>
-          <link rel="stylesheet" href="/assets/style.css" />
+          <link rel="stylesheet" href="/assets/css/app.css" />
           <script src="/assets/bundle.js" />
         </head>
         <Pages className="App" path={this.props.path}>

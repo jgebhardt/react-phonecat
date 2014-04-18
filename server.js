@@ -40,7 +40,7 @@ if (development) {
 
 app
   .use('/assets', express.static(path.join(__dirname, 'assets')))
-  .use(express.favicon("assets/favicon.ico"))
+  .use(express.favicon("assets/img/favicon.ico"))
   .use('/api', api)
   .use(renderApp)
   .listen(3000, function() {
