@@ -5,7 +5,7 @@ var express     = require('express');
 var browserify  = require('connect-browserify');
 var ReactAsync  = require('react-async');
 var nodejsx     = require('node-jsx').install();
-var App         = require('./client');
+var App         = require('./modules/App');
 
 var development = process.env.NODE_ENV !== 'production';
 
@@ -33,10 +33,7 @@ function returnJSONFile(req, res, filePath) {
 var api = express()
   .get('/phones/:phone', function(req, res) {
     var phone = req.params.phone;
-    var path =
-      './data/phones/' +
-      (phone === undefined ? 'phones' : phone) +
-      '.json';
+    var path = './data/phones/' + phone + '.json';
     returnJSONFile(req, res, path);
   })
   .get('/phones', function(req, res) {
@@ -47,7 +44,7 @@ var app = express();
 
 if (development) {
   app.get('/assets/bundle.js',
-    browserify('./client', {
+    browserify('./modules/App', {
       debug: true,
       watch: true
     }));
