@@ -1,3 +1,4 @@
+var fs          = require('fs');
 var path        = require('path');
 var url         = require('url');
 var express     = require('express');
@@ -19,13 +20,27 @@ function renderApp(req, res, next) {
   });
 }
 
+function returnJSONFile(req, res, filePath) {
+  fs.readFile(filePath, 'utf8', function (err, data) {
+    if (err) {
+      res.status(404).send('Not found');
+    }
+    data = JSON.parse(data);
+    res.send(data);
+  });
+}
+
 var api = express()
-  .get('/users/:username', function(req, res) {
-    var username = req.params.username;
-    res.send({
-      username: username,
-      name: username.charAt(0).toUpperCase() + username.slice(1)
-    });
+  .get('/phones/:phone', function(req, res) {
+    var phone = req.params.phone;
+    var path =
+      './data/phones/' +
+      (phone === undefined ? 'phones' : phone) +
+      '.json';
+    returnJSONFile(req, res, path);
+  })
+  .get('/phones', function(req, res) {
+    returnJSONFile(req, res, './data/phones/phones.json');
   });
 
 var app = express();
