@@ -15,7 +15,6 @@ var Checkmark = React.createClass({
   render: function() {
     return <span>{this.props.checked ? '\u2713' : '\u2718'}</span>;
   }
-
 });
 
 module.exports = Checkmark;
