@@ -54,8 +54,10 @@ var PhoneList = React.createClass({
   render: function() {
     var sortByFunction = this.state.sortBy === 'age' ? sortByAge : sortByName;
     var filterValue = this.state.filterValue;
-    var filteredPhones = this.props.phones.filter(function(phone) {
-      return JSON.stringify(phone).indexOf(filterValue) !== -1;
+    var filteredSortedPhones = this.props.phones.filter(function(phone) {
+      return Object.keys(phone)
+        .reduce(function(memo, key) {return memo + phone[key]}, '')
+        .indexOf(filterValue) !== -1;
     }).sort(sortByFunction).map(function(phone, i){
       return (
         <li className="thumbnail phone-listing" key={i}>
@@ -84,7 +86,7 @@ var PhoneList = React.createClass({
             {/* Body content */}
             <ul className="phones">
               <ReactCSSTransitionGroup transitionName="phone-listing">
-                {filteredPhones}
+                {filteredSortedPhones}
               </ReactCSSTransitionGroup>
             </ul>
           </div>
