@@ -7,15 +7,17 @@ var ReactAsync = require('react-async');
 var superagent  = require('superagent');
 
 var Link = require('react-router-component').Link;
+var PhoneDetails = require('./PhoneDetails');
 
 var PhonePage = React.createClass({
   mixins: [ReactAsync.Mixin],
 
   getPhoneInfo: function(phoneName, cb) {
+    debugger
     superagent.get(
       'http://localhost:3000/api/phones/' + phoneName,
       function(err, res) {
-        cb(err, res ? res.body : null);
+        cb(err, res ? {phone: res.body} : null);
       });
   },
 
@@ -25,6 +27,7 @@ var PhonePage = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (this.props.phone !== nextProps.phone) {
+      debugger
       this.getPhoneInfo(nextProps.phone, function(err, info) {
         if (err) {
           throw err;
@@ -35,14 +38,10 @@ var PhonePage = React.createClass({
   },
 
   render: function() {
-    var otherUser = this.props.phone === 'lg-axis' ? 'dell-streak-7' : 'lg-axis';
     return (
       <div className="PhonePage">
-        <h1>Hello, {this.state.name}!</h1>
-        <p>
-          Go to <Link href={"/phones/" + otherUser}>/users/{otherUser}</Link>
-        </p>
-        <p><Link href="/">Logout</Link></p>
+        <p><Link href="/">back to all phones</Link></p>
+        <PhoneDetails phone={this.state.phone} />
       </div>
     );
   }

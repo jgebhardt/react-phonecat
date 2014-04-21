@@ -23,12 +23,13 @@ var App = React.createClass({
     return (
       <html>
         <head>
+          <link rel="stylesheet" href="/assets/css/bootstrap.css" />
           <link rel="stylesheet" href="/assets/css/app.css" />
           <script src="/assets/bundle.js" />
         </head>
         <Pages className="App" path={this.props.path}>
           <Page path="/" handler={PhonesPage} />
-          <Page path="/phones/" handler={PhonesPage} />
+          <Page path="/phones" handler={PhonesPage} />
           <Page path="/phones/:phone" handler={PhonePage} />
           <NotFound handler={NotFoundHandler} />
         </Pages>
