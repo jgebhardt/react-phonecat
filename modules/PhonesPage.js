@@ -27,8 +27,9 @@ var PhonesPage = React.createClass({
     superagent.get(
       'http://localhost:3000/api/phones/',
       function(err, res) {
-        cb(err, res ? {phones: res.body, filterValue: '',
-      sortBy: 'name'} : null);
+        cb(err, res
+          ? {phones: res.body, filterValue: '', sortBy: 'name'}
+          : null);
       });
   },
 
@@ -67,7 +68,6 @@ var PhonesPage = React.createClass({
   },
 
   render: function() {
-    debugger
     var phones = this.state.phones || [];
     var filterValue = this.state.filterValue || '';
     var sortByFunction = this.state.sortBy === 'age' ? sortByAge : sortByName;
@@ -76,10 +76,10 @@ var PhonesPage = React.createClass({
     }).sort(sortByFunction).map(function(phone, i){
       return (
         <li className="thumbnail phone-listing" key={i}>
-          <a href={'/phones/' + phone.id} className="thumb">
+          <Link href={'/phones/' + phone.id} className="thumb">
             <img src={STATIC_ROOT + phone.imageUrl} />
-          </a>
-          <a href={'/phones/' + phone.id}>{phone.name}</a>
+          </Link>
+          <Link href={'/phones/' + phone.id}>{phone.name}</Link>
           <p>{phone.snippet}</p>
         </li>
       );

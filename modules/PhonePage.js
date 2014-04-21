@@ -13,7 +13,6 @@ var PhonePage = React.createClass({
   mixins: [ReactAsync.Mixin],
 
   getPhoneInfo: function(phoneName, cb) {
-    debugger
     superagent.get(
       'http://localhost:3000/api/phones/' + phoneName,
       function(err, res) {
@@ -27,7 +26,6 @@ var PhonePage = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (this.props.phone !== nextProps.phone) {
-      debugger
       this.getPhoneInfo(nextProps.phone, function(err, info) {
         if (err) {
           throw err;

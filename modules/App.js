@@ -16,7 +16,6 @@ var PhonePage = require('./PhonePage');
 
 ReactMount.allowFullPageRender = true;
 
-
 var App = React.createClass({
 
   render: function() {
