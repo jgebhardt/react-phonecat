@@ -38,7 +38,7 @@ var PhonePage = React.createClass({
   render: function() {
     return (
       <div className="PhonePage">
-        <p><Link href="/">back to all phones</Link></p>
+        <Link className="backlink" href="/">back to all phones</Link>
         <PhoneDetails phone={this.state.phone} />
       </div>
     );

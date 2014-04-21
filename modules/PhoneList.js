@@ -2,9 +2,10 @@
  * @jsx React.DOM
  */
 
-var React = require('react');
+var React = require('react/lib/ReactWithAddons');
 var Link = require('react-router-component').Link;
 var STATIC_ROOT = require('./StaticRoot');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 sortByAge = function(a, b) {
   return a.age - b.age;
@@ -71,19 +72,20 @@ var PhoneList = React.createClass({
         <div className="row">
           <div className="col-md-2">
             {/* Sidebar content */}
-
-            Search: <input value={this.state.filterValue} onChange={this.handleFilterChange} />
-            Sort by:
-            <select onChange={this.handleSelect}>
-              <option value="name">Alphabetical</option>
-              <option value="age">Newest</option>
-            </select>
-
+            <div>Search: <input value={this.state.filterValue} onChange={this.handleFilterChange} /></div>
+            <div>
+              Sort by: <select onChange={this.handleSelect}>
+                <option value="name">Alphabetical</option>
+                <option value="age">Newest</option>
+              </select>
+            </div>
           </div>
           <div className="col-md-10">
             {/* Body content */}
             <ul className="phones">
-              {filteredPhones}
+              <ReactCSSTransitionGroup transitionName="phone-listing">
+                {filteredPhones}
+              </ReactCSSTransitionGroup>
             </ul>
           </div>
         </div>
