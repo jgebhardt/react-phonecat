@@ -7,16 +7,6 @@ var Checkmark = require('./Checkmark');
 
 var STATIC_ROOT = require('./StaticRoot');
 
-var cx = function(candidates) {
-  var classname = '';
-  for (key in candidates) {
-    if (candidates[key]) {
-      classname += ' ' + key;
-    }
-  }
-  return classname;
-}
-
 var PhoneDetails = React.createClass({
 
   getInitialState: function() {
@@ -25,7 +15,7 @@ var PhoneDetails = React.createClass({
     };
   },
 
-  handleThumbClick: function(activeURL) {
+  handleThumbClick: function(activeURL, event) {
     this.setState({
       activeImageURL: activeURL
     });
@@ -33,15 +23,6 @@ var PhoneDetails = React.createClass({
 
   render: function() {
     var phone = this.props.phone;
-    var images = phone.images.map(function(image, i) {
-      return (
-        <img
-          className="phone"
-          key={i}
-          src={this.state.activeImageURL}
-        />
-      );
-    }.bind(this));
     var phoneThumbs = phone.images.map(function(image, i) {
       var imageURL = STATIC_ROOT + image;
       return (
@@ -59,7 +40,7 @@ var PhoneDetails = React.createClass({
     return (
       <div>
         <div className="phone-images">
-          {images}
+          <img className="phone" src={this.state.activeImageURL}/>
         </div>
 
         <h1>{ phone.name }</h1>

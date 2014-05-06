@@ -7,11 +7,11 @@ var Link = require('react-router-component').Link;
 var STATIC_ROOT = require('./StaticRoot');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-sortByAge = function(a, b) {
+function sortByAge(a, b) {
   return a.age - b.age;
 }
 
-sortByName = function(a, b) {
+function sortByName(a, b) {
   return a.name > b.name
     ? 1
     : a.name < b.name
@@ -19,18 +19,14 @@ sortByName = function(a, b) {
       : 0;
 }
 
-var PhoneList = React.createClass({
+function concatValues(obj) {
+  return Object.keys(obj).reduce(function(prev, key){
+    var val = obj[key];
+    return prev + (typeof val === 'object' ? concatValues(val) : val);
+  }, '');
+}
 
-  componentWillReceiveProps: function(nextProps) {
-    if (this.props.phone !== nextProps.phone) {
-      this.getPhonesData(function(err, info) {
-        if (err) {
-          throw err;
-        }
-        this.setState(info);
-      }.bind(this));
-    }
-  },
+var PhoneList = React.createClass({
 
   getInitialState: function() {
     return {
@@ -55,9 +51,7 @@ var PhoneList = React.createClass({
     var sortByFunction = this.state.sortBy === 'age' ? sortByAge : sortByName;
     var filterValue = this.state.filterValue;
     var filteredSortedPhones = this.props.phones.filter(function(phone) {
-      return Object.keys(phone)
-        .reduce(function(memo, key) {return memo + phone[key]}, '')
-        .indexOf(filterValue) !== -1;
+      return concatValues(phone).toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
     }).sort(sortByFunction).map(function(phone, i){
       return (
         <li className="thumbnail phone-listing" key={i}>
