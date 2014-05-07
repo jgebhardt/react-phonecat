@@ -11,7 +11,7 @@ var PhoneDetails = React.createClass({
 
   getInitialState: function() {
     return {
-      activeImageURL: this.props.phone && (STATIC_ROOT + this.props.phone.images[0]) || ''
+      activeImageURL: this.props.phone ? (STATIC_ROOT + this.props.phone.images[0]) : ''
     };
   },
 
